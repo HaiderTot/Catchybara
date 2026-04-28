@@ -6,3 +6,22 @@ Builds/
 Logs/
 UserSettings/
 MemoryCaptures/
+
+# Visual Studio / Rider / IDE
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.unityproj
+*.booproj
+*.pidb
+*.opendb
+*.VC.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Crash logs
+sysinfo.txt
