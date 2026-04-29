@@ -3,6 +3,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public UIManager uiManager;
+
+    public GameObject fishGame;
+
+    public fishing_minigame fishingMinigame;
+
+    private bool resultProcessed = false;
+
     //public int caughtFish = 0;
     public int commonFish = 0;
     public int uncommonFish = 0;
@@ -24,10 +31,21 @@ public class GameManager : MonoBehaviour
 
         if (isCatching)
         {
-            if (random < 0.1f)
+            if (random < 0.01f)
             {
                 Catch();
             }
+        }
+
+        if (fishingMinigame != null)
+        {
+            Debug.Log("Finished = " + fishingMinigame.isFinished);
+        }
+
+        if (fishingMinigame != null && fishingMinigame.isFinished && !resultProcessed)
+        {
+            resultProcessed = true;
+            HandleResult();
         }
     }
 
@@ -35,32 +53,41 @@ public class GameManager : MonoBehaviour
     {
         isCatching = false;
         isOnLine = true;
+        resultProcessed = false;
 
-        float randomFish = Random.value;
+        GameObject instance = Instantiate(fishGame);
+        instance.SetActive(true);
+        Debug.Log("Spawned: " + instance.name);
 
-        if (randomFish < 0.7)
+        fishingMinigame = instance.GetComponentInChildren<fishing_minigame>();
+    }
+
+    void HandleResult()
+    {
+        bool success = fishingMinigame.success;
+        if (success)
         {
-            commonFish++;
-            uiManager.ShowCommonCaught(commonFish);
-            isCatching = true;
-            isOnLine = false;
-            return;
+            float fishRarity = Random.value;
+            if (fishRarity < 0.7f)
+            {
+                commonFish++;
+                uiManager.ShowCommonCaught(commonFish);
+            }
+            else if (fishRarity < 0.95f)
+            {
+                uncommonFish++;
+                uiManager.ShowUncommonCaught(uncommonFish);
+            }
+            else
+            {
+                rareFish++;
+                uiManager.ShowRareCaught(rareFish);
+            }
         }
-        else if (randomFish < 0.95)
-        {
-            uncommonFish++;
-            uiManager.ShowUncommonCaught(uncommonFish);
-            isCatching = true;
-            isOnLine = false;
-            return;
-        }
-        else
-        {
-            rareFish++;
-            uiManager.ShowRareCaught(rareFish);
-            isCatching = true;
-            isOnLine = false;
-            return;
-        }
+        Destroy(fishingMinigame.transform.root.gameObject);
+        fishingMinigame = null;
+
+        isCatching = true;
+        isOnLine = false;
     }
 }

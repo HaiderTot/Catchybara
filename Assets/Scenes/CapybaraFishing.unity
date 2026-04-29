@@ -302,6 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   uiManager: {fileID: 1170468098}
+  fishGame: {fileID: 0}
+  fishingMinigame: {fileID: 0}
   commonFish: 0
   uncommonFish: 0
   rareFish: 0
