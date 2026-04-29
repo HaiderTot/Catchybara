@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     private bool resultProcessed = false;
 
-    //public int caughtFish = 0;
     public int commonFish = 0;
     public int uncommonFish = 0;
     public int rareFish = 0;
@@ -60,6 +59,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawned: " + instance.name);
 
         fishingMinigame = instance.GetComponentInChildren<fishing_minigame>();
+        //fishingMinigame.markerSpeed = 450f;
     }
 
     void HandleResult()
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
                 rareFish++;
                 uiManager.ShowRareCaught(rareFish);
             }
+            uiManager.UpdateCapybara(commonFish, uncommonFish, rareFish);
         }
         Destroy(fishingMinigame.transform.root.gameObject);
         fishingMinigame = null;
