@@ -68,12 +68,12 @@ public class GameManager : MonoBehaviour
         if (success)
         {
             float fishRarity = Random.value;
-            if (fishRarity < 0.7f)
+            if (fishRarity < 0.05f)
             {
                 commonFish++;
                 uiManager.ShowCommonCaught(commonFish);
             }
-            else if (fishRarity < 0.95f)
+            else if (fishRarity < 0.1f)
             {
                 uncommonFish++;
                 uiManager.ShowUncommonCaught(uncommonFish);
